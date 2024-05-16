@@ -1,5 +1,6 @@
 *__pycache__
 data/
+_data/
 log
 venv_etl
 .env

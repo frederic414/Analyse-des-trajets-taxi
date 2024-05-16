@@ -25,6 +25,8 @@ def transform(df):
 
         #Suppression des colonnes airport_fee et congestion_surcharge car ses colonne contiennent trop de valeurs manquantes
         # df_filtered = df_filtered.drop(['congestion_surcharge', 'airport_fee'], axis =1)
+
+        df_filtered = df_filtered.copy()
         
         df_filtered.rename(columns=str.lower, inplace=True)
         
