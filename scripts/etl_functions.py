@@ -2,12 +2,11 @@ import logging
 import pandas as pd
 from sqlalchemy import create_engine
 
-
+# Configuration de la journalisation
+logging.basicConfig(filename='log/etl.log', level=logging.INFO,
+                format='%(asctime)s - %(levelname)s - %(message)s')
 
 def extract(file_path : str):
-    # Configuration de la journalisation
-    logging.basicConfig(filename='log/extraction.log', level=logging.INFO,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
     try:
         data = pd.read_parquet(file_path)
         # Enregistrement d'un message d'information dans le journal
@@ -20,8 +19,6 @@ def extract(file_path : str):
 
 
 def transform(df):
-    logging.basicConfig(filename='log/transform.log', level=logging.INFO, 
-                        format='%(asctime)s:%(levelname)s:%(message)s')
     try:
         # Suppression des observations avec des valeurs manquantes dans les colonnes spécifiées
         df_filtered = df.dropna(axis=0, subset=['passenger_count', 'total_amount'])
@@ -41,10 +38,7 @@ def transform(df):
         return None
 
 
-def load(df, table_name, connection_string):
-    logging.basicConfig(filename='log/load.log', level=logging.INFO, 
-                        format='%(asctime)s:%(levelname)s:%(message)s')
-    
+def load(df, table_name, connection_string): 
     try:
         # Création de l'engine de base de données
         engine = create_engine(connection_string)
